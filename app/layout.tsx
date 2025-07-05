@@ -1,13 +1,10 @@
-import "@/app/ui/global.css";
+import './ui/global.css'     
+import { ReactNode } from 'react'
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
-	return (
-		<html lang="en">
-			<body>{children}</body>
-		</html>
-	);
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="fr">
+      <body>{children}</body>
+    </html>
+  )
 }
