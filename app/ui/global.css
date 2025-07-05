@@ -1,18 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Ensure this file is processed by Tailwind CSS via PostCSS or a compatible build tool */
+/* @tailwind directives removed because Tailwind CSS is not configured in the build tool */
 
-input[type='number'] {
-  -moz-appearance: textfield;
-  appearance: textfield;
+input[type="number"] {
+	-moz-appearance: textfield;
+	appearance: textfield;
 }
 
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
-input[type='number']::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
