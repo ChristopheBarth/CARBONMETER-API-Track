@@ -15,6 +15,7 @@ export default function HomePage() {
   const [history, setHistory] = useState<
     { bytes: number; region: "WORLD" | "EU"; result: number; date: string }[]
   >([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // 1) Clé API
@@ -49,6 +50,7 @@ export default function HomePage() {
       return;
     }
 
+    setLoading(true);
     try {
       const res = await fetch("/api/estimate", {
         method: "POST",
@@ -58,6 +60,9 @@ export default function HomePage() {
         },
         body: JSON.stringify({ bytes, region }),
       });
+      // Simule un délai pour bien voir le skeleton
+      await new Promise((r) => setTimeout(r, 500));
+
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Erreur inconnue");
 
@@ -79,18 +84,20 @@ export default function HomePage() {
       });
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <main className="pt-0 px-4 max-w-lg mx-auto">
+    <main className="pt-4 px-4 max-w-lg mx-auto">
       {/* Logo */}
-      <div className="mb-4 m-4">
+      <div className="mb-4">
         <Image
           src="/carbonmeterapitrack.png"
           alt="Logo CarbonMeter API Track"
-          width={200}
-          height={200}
+          width={220}
+          height={220}
           className="object-contain"
           priority
         />
@@ -111,9 +118,11 @@ export default function HomePage() {
             <label className="block mb-1">Taille (bytes)</label>
             <input
               type="number"
+              min={0}
               value={bytes}
               onChange={(e) => setBytes(Number(e.target.value))}
               className="w-full p-2 border rounded"
+              disabled={loading}
             />
           </div>
           <div>
@@ -122,6 +131,7 @@ export default function HomePage() {
               value={region}
               onChange={(e) => setRegion(e.target.value as "WORLD" | "EU")}
               className="w-full p-2 border rounded"
+              disabled={loading}
             >
               <option value="WORLD">Monde</option>
               <option value="EU">Europe</option>
@@ -129,11 +139,25 @@ export default function HomePage() {
           </div>
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded"
+            disabled={loading}
+            className={`w-full py-2 text-white rounded ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            Estimer
+            {loading ? "Chargement…" : "Estimer"}
           </button>
         </form>
+
+        {/* Skeleton loader pour l’historique */}
+        {loading && (
+          <div className="animate-pulse space-y-2 mt-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-3 bg-gray-200 rounded w-2/3" />
+            ))}
+          </div>
+        )}
 
         {error && <p className="mt-4 text-red-600">Erreur : {error}</p>}
         {result !== null && (

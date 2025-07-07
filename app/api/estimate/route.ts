@@ -7,6 +7,9 @@ const FACTOR_G_PER_MB = 0.81
 const EU_ADJUST      = 0.9
 
 export async function POST(req: Request) {
+  // ★ Simule 300ms de traitement pour voir le skeleton loader ★
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   // 1. Récupération de la clé
   const apiKey = req.headers.get('authorization')?.split(' ')[1]
   if (!apiKey) {
