@@ -1,10 +1,16 @@
-import './ui/global.css'     
-import { ReactNode } from 'react'
+import "./ui/global.css";
+import { ThemeRegistry } from "./providers/ThemeRegistry";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        <ThemeRegistry>{children}</ThemeRegistry>
+      </body>
     </html>
-  )
+  );
 }
