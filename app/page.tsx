@@ -1,5 +1,6 @@
 "use client";
 
+import { Header } from "./ui/header";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
@@ -106,9 +107,12 @@ export default function HomePage() {
   }
 
   return (
-    <main className="pt-4 px-4 max-w-4xl mx-auto transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      {/* Theme toggle */}
-      <div className="flex justify-end mb-4">
+    <>
+      {/* 1) Ton Header personnalisé avec icône + vrai texte HTML */}
+      <Header />
+
+      {/* 2) Bouton de toggle thème */}
+      <div className="flex justify-end px-4">
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -121,26 +125,16 @@ export default function HomePage() {
         </button>
       </div>
 
-      <div className="pt-4 px-4 max-w-lg mx-auto">
-        {/* Logo */}
-        <div className="mb-4">
-          <Image
-            src="/carbonmeterapitrack.png"
-            alt="Logo CarbonMeter API Track"
-            width={220}
-            height={220}
-            className="object-contain"
-            priority
-          />
-        </div>
-
+      {/* 3) Toute ta mise en page dans <main> */}
+      <main
+        className="pt-4 px-4 max-w-4xl mx-auto transition-colors
+                       bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+      >
         <h1 className="text-3xl font-bold mb-2 text-center">
           Estim’CO₂ Chaque octet compte : réduisez votre impact carbone en un
           clic
         </h1>
-        {/* <p className="text-center text-lg text-green-600 mb-4">
-        Chaque octet compte : réduisez votre impact carbone en un clic
-      </p> */}
+
         {quota && (
           <p className="mb-6 text-sm text-gray-600 text-center">
             Quota utilisé : {quota.used} / {quota.quota}
@@ -219,7 +213,7 @@ export default function HomePage() {
             )}
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
