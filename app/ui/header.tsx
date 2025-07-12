@@ -2,16 +2,16 @@
 
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Roboto } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import React from "react";
 
-// ⚡️ On instancie 2 variantes de Roboto :
-const roboto700 = Roboto({
+// ⚡️ On instancie 2 variantes de Montserrat :
+const montserrat700 = Montserrat({
   weight: "700",
   subsets: ["latin"],
   display: "swap",
 });
-const roboto400 = Roboto({
+const montserrat400 = Montserrat({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
@@ -19,14 +19,11 @@ const roboto400 = Roboto({
 
 export function Header() {
   const { theme } = useTheme();
-
-  // on prépare la couleur en fonction du thème
   const textColor = theme === "dark" ? "text-white" : "text-black";
-  const subColor = theme === "dark" ? "text-gray-300" : "text-gray-600";
+  const subColor = "text-[#00adef]";
 
   return (
-    // <header className="flex items-center space-x-3 py-4 px-4">
-    <header className="flex items-center px-4 py-4">
+    <header className="flex items-start px-4 py-2">
       <Image
         src="/customers/carbon-icon.png"
         alt="Icône CarbonMeter Track"
@@ -34,16 +31,26 @@ export function Header() {
         height={80}
         priority
       />
-      {/* C’est ici qu’on applique Roboto */}
+
       <div className="ml-3">
-        {/* On applique Roboto700 au mot “CARBON” */}
-        <h1 className={`text-2xl leading-tight ${textColor}`}>
-          <span className={roboto700.className}>CARBON</span>{" "}
-          {/* Roboto400 au reste */}
-          <span className={`${roboto400.className}`}>METER API</span>
+        {/* 1) On colle CARBON et METER API */}
+        <h1
+          className={`
+            text-2xl 
+            leading-tight 
+            ${textColor} 
+            !mb-0        <!-- ZERO margin bottom -->
+            tracking-tight  <!-- (optionnel) resserre les lettres -->
+          `}
+        >
+          <span className={montserrat700.className}>CARBON</span>
+          <span className={`${montserrat400.className}`}>METER API</span>
         </h1>
 
-        <p className="text-sm uppercase tracking-widest text-[#00adef]">
+        {/* 2) On colle Track sous le titre */}
+        <p
+          className={`!-mt-0 text-sm uppercase tracking-widest ${subColor} mt-0`}
+        >
           Track
         </p>
       </div>
